@@ -4,11 +4,16 @@
 .SH "NAME"
 \fBgit\-wip\fR \- Create a Work In Progress commit
 .SH "SYNOPSIS"
-\fBgit\-wip\fR
+\fBgit\-wip\fR [options]
 .SH "DESCRIPTION"
 Create a Work In Progress commit, include all files in the working directory\.
 .SH "OPTIONS"
-None
+.IP "\-\-no\-verify, \-\-no\-hooks"
+Skip git hooks verification
+.IP "\-\-run\-hooks"
+Run git hooks verification (overrides skip settings)
+.IP "\-h, \-\-help"
+Show help message
 .SH "EXAMPLES"
 Create a WIP commit which stores all changes in the working directory\.
 .IP "" 4

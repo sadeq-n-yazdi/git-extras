@@ -3,11 +3,11 @@
 # Based on scripts from git-utils:
 # * https://github.com/ddollar/git-utils/blob/master/git-unwip
 
-# Check if the last commit is a 'WIP' commit
-LAST_COMMIT=`git log -1 --pretty=%B | tr -d '[:space:]'`
+# Check if the last commit subject line starts with 'WIP'?
+LAST_COMMIT_MSG=$(git log -1 --pretty=%s)
 
-if [ 'WIP' != $LAST_COMMIT ]; then
-  echo 'Last commit is not a WIP commit, so it will not be unWIP-ed.'
+if [[ "$LAST_COMMIT_MSG" != WIP* ]]; then
+  echo 'Last commit subject line does not start with "WIP" ("'"$LAST_COMMIT_MSG"'"), so it will not be unWIP-ed.'
   exit 1
 fi
 

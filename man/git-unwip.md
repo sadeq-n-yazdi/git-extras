@@ -7,7 +7,7 @@ git-unwip(1) -- Undo a Work In Progress commit
 
 ## DESCRIPTION
 
-  Undo a Work In Progress commit.
+  Undo a Work In Progress commit. This command accepts any commit message starting with "WIP".
 
 ## OPTIONS
 
@@ -17,11 +17,11 @@ git-unwip(1) -- Undo a Work In Progress commit
 
   Create a WIP commit which stores all changes in the working directory.
 
-    $ git wip
+    git wip
 
   Later on, undo the commit and continue making changes.
 
-    $ git unwip
+    git unwip
 
 ## AUTHOR
 
