@@ -3,7 +3,7 @@ git-wip(1) -- Create a Work In Progress commit
 
 ## SYNOPSIS
 
-`git-wip`
+`git-wip` [options]
 
 ## DESCRIPTION
 
@@ -11,17 +11,19 @@ git-wip(1) -- Create a Work In Progress commit
 
 ## OPTIONS
 
-  None
+  --no-verify, --no-hooks   Skip git hooks verification
+  --run-hooks               Run git hooks verification (overrides skip settings)
+  -h, --help                Show help message
 
 ## EXAMPLES
 
   Create a WIP commit which stores all changes in the working directory.
 
-    $ git wip
+    git wip
 
   Later on, undo the commit and continue making changes.
 
-    $ git unwip
+    git unwip
 
 ## AUTHOR
 

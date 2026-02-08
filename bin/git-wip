@@ -1,8 +1,56 @@
 #!/usr/bin/env bash
 
+#
+# check whether current directory is inside a git repository
+#
+
+is_git_repo() {
+  git rev-parse --show-toplevel > /dev/null 2>&1
+  result=$?
+  if test $result != 0; then
+    >&2 echo 'Not a git repo!'
+    exit $result
+  fi
+}
+
+is_git_repo
+
 # Based on scripts from git-utils:
 # * https://github.com/ddollar/git-utils/blob/master/git-wip
 # * https://github.com/ddollar/git-utils/blob/master/git-addremove
 
-git add --all
-git commit --all --message="WIP"
+usage() {
+  echo "Usage: $(basename "$0") [options]"
+  echo
+  echo "Options:"
+  echo "  --no-verify, --no-hooks   Skip git hooks verification"
+  echo "  --run-hooks               Run git hooks verification (overrides skip settings)"
+  echo "  -h, --help                Show this help message"
+  exit 0
+}
+
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    --no-verify|--no-hooks) GIT_WIP_SKIP_VERIFY=1 ;;
+    --run-hooks) GIT_WIP_SKIP_VERIFY='' ;;
+    -h|--help) usage ;;
+    *) echo "Unknown parameter passed: $1"; exit 1 ;;
+  esac
+  shift
+done
+
+SKIP_VERIFY=''
+if [ -n "$GIT_WIP_SKIP_VERIFY" ]; then
+ SKIP_VERIFY=--no-verify
+fi
+
+if [ -z "$GIT_WIP_MESSAGE" ]; then
+  GIT_WIP_MESSAGE="WIP: $(date)"
+fi
+
+if [ -n "$GIT_WIP_STASH" ]; then
+  git stash push -m "$GIT_WIP_MESSAGE" --include-untracked
+else
+  git commit $SKIP_VERIFY --all --message="$GIT_WIP_MESSAGE"
+fi
+
